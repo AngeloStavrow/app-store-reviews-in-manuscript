@@ -8,6 +8,7 @@ const manuscript = require('manuscript-api')
 const app = express();
 const querystring = require('querystring');
 const bodyParser = require('body-parser');
+const setup = require('./setup.js');
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -29,6 +30,7 @@ app.post("/", (request, response) => {
       site: `https://${request.body.site}`,
       token: request.body.token
     })
+    setup.isFirstRun(request.body.site, request.body.token);
     return response.redirect(`/?${query}`);
 })
 
